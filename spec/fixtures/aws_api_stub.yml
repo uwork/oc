@@ -1,0 +1,71 @@
+
+basic:
+  find_instances:
+    - id: i-111111
+      name: default-instance
+      profile: default
+      role: web
+      type: t2.micro
+      state: running
+      public_ip: 10.0.1.1
+    - id: i-222222
+      name: default-instance
+      profile: default
+      role: web
+      type: t2.micro
+      state: running
+      public_ip: 10.0.1.2
+
+single:
+  find_instances:
+    - id: i-111111
+      name: default-instance
+      profile: default
+      role: web
+      type: t2.micro
+      state: running
+      public_ip: 10.0.1.1
+
+state_all:
+  find_instances:
+    - id: i-111111
+      name: default-instance
+      profile: default
+      role: web
+      type: t2.micro
+      state: running
+      public_ip: 10.0.1.1
+    - id: i-222222
+      name: default-instance
+      profile: default
+      role: web
+      type: t2.micro
+      state: running
+      public_ip: 10.0.1.2
+    - id: i-333333
+      name: default-instance
+      profile: default
+      role: web
+      type: t2.micro
+      state: terminated
+      public_ip: 10.0.1.3
+
+
+state_stopped:
+  find_instances:
+    - id: i-111111
+      name: default-instance
+      profile: default
+      role: web
+      type: t2.micro
+      state: stopped
+      public_ip: 10.0.1.1
+    - id: i-222222
+      name: default-instance
+      profile: default
+      role: web
+      type: t2.micro
+      state: stopped
+      public_ip: 10.0.1.2
+
+

@@ -1,0 +1,13 @@
+
+role: test
+firewall:
+  - test-onlyme
+
+provision:
+  repo: git@localhost:example/test.git
+  key: /tmp/.oc/keys/key
+
+  type: chefsolo
+  option: "-c solo.rb -j nodes/host.json"
+
+

@@ -1,0 +1,4 @@
+[oc]
+type = aws
+profile = test
+

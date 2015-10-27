@@ -1,0 +1,12 @@
+
+role: test
+firewall:
+  - test-onlyme
+
+provision:
+  repo: git@localhost:example/test.git
+  key: /tmp/.oc/keys/key
+
+  type: ansible
+  option: "test-playbook.yml"
+

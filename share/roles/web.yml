@@ -1,0 +1,15 @@
+
+# 継承元のロール
+parent: default
+
+
+# ロール名
+role: web
+
+
+# セキュリティ設定
+firewall:
+  - basic-onlyme # oc実行マシンのグローバルIPからはどのプロトコル・ポートでも疎通可能
+  - basic-http   # tcp 80,443をanyで疎通可能
+
+

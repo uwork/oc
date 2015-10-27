@@ -1,0 +1,13 @@
+
+image: ami-e3106686 # Amazon Linux 2015.09(us-east-1)
+role: default
+firewall:
+  - basic-onlyme
+
+devices:
+  /dev/xvda:
+    size: 8
+    type: gp2
+    ondelete: true
+
+

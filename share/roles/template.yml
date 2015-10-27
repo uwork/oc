@@ -1,0 +1,53 @@
+
+
+# ベースとなるイメージ(ami)
+image: ami-e3106686 # Amazon Linux 2015.09(us-east-1)
+
+
+# ロール名
+role: template
+
+
+# awsのセキュリティグループ(basic-http|basic-login|basic-onlyme)
+firewall:
+  - basic-onlyme
+
+
+# IAM Role設定
+#iam_role: arn:aws:iam::99999999999:instance-profile/role_name
+
+
+# ブロックデバイス
+devices:
+  /dev/xvda:
+    size: 10
+    type: gp2
+    ondelete: true
+
+
+
+# プロビジョニングの設定を記述します。
+#provision:
+#  repo: git@localhost:user/repo.git    # プロビジョニングに利用するリポジトリURI
+#  key: /path/to/.ssh/id_rsa            # リポジトリへのアクセスに使用する鍵のパス
+#  local: true|false                    # リモートホストからgit cloneできない場合、local:trueとすると、
+#                                       # ローカルでgit cloneしてrsyncする
+#
+#  # chefsolo は chef-solo コマンドに渡す引数を option として記述します。
+#  type: chefsolo
+#  option: "-c solo.rb -j nodes/localhost.json"
+#
+#
+#  # chefzero は chef-client コマンドに渡す引数を option として記述します。-z(localmode)はデフォルトで指定されています。
+#  type: chefzero
+#  option: "-j nodes/localhost.json"
+#
+#  # ansible は playbook ファイルを記述します。
+#  type: ansible
+#  option: "playbook.yml"
+#
+#  # shell はシェルで実行できるコマンドそのものを記述します。
+#  type: shell
+#  option: "yum -y install httpd"
+#
+

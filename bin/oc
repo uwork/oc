@@ -1,0 +1,12 @@
+#!/bin/sh
+
+CURRENT_DIR=`pwd`
+
+cd `dirname ${0}`
+cd ..
+
+OC_HOME=`pwd`
+
+OC_HOME=$OC_HOME CURRENT_DIR=$CURRENT_DIR bundle exec ruby oc.rb ${@}
+
+

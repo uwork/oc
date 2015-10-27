@@ -1,0 +1,107 @@
+
+basic:
+  describe_vpcs:
+    vpcs:
+  describe_instances:
+    reservations:
+      - instances:
+        - instance_id: i-111111
+          instance_type: t2.micro
+          state:
+            name: test-instance
+          public_ip_address: 11.22.33.44
+          tags:
+            - key: Name
+              value: test-instance
+            - key: Profile
+              value: test
+            - key: Role
+              value: web
+        - instance_id: i-222222
+          instance_type: t2.micro
+          state:
+            name: test-instance
+          public_ip_address: 11.22.33.44
+          tags:
+            - key: Name
+              value: test-instance
+            - key: Profile
+              value: test
+            - key: Role
+              value: web
+  describe_route_tables:
+    route_tables:
+      - route_table_id: rtb-111111
+  describe_subnets:
+    subnets:
+      - subnet_id: subnet-111111
+  describe_internet_gateways:
+    internet_gateways:
+      - internet_gateway_id: igw-11111
+  describe_security_groups:
+    security_groups:
+      - group_id: sg-1111111
+      - group_id: sg-2222222
+
+  run_instances:
+    instances:
+      - instance_id: i-222222
+
+  create_internet_gateway:
+    internet_gateway:
+      internet_gateway_id: igw-111111
+
+  create_subnet:
+    subnet:
+      subnet_id: subnet-111111
+
+  create_security_group:
+    group_id: sg-111111
+
+
+
+state_created:
+  describe_vpcs:
+    vpcs:
+      - vpc_id: vpc-111111
+  describe_instances:
+    reservations:
+      - instances:
+        - instance_id: i-111111
+          instance_type: t2.micro
+          state:
+            name: test-instance
+          public_ip_address: 11.22.33.44
+          tags:
+            - key: Name
+              value: test-instance
+            - key: Profile
+              value: test
+            - key: Role
+              value: web
+        - instance_id: i-222222
+          instance_type: t2.micro
+          state:
+            name: test-instance
+          public_ip_address: 11.22.33.44
+          tags:
+            - key: Name
+              value: test-instance
+            - key: Profile
+              value: test
+            - key: Role
+              value: web
+  describe_route_tables:
+    route_tables:
+      - route_table_id: rtb-111111
+  describe_subnets:
+    subnets:
+      - subnet_id: subnet-111111
+  describe_internet_gateways:
+    internet_gateways:
+      - internet_gateway_id: igw-11111
+  describe_security_groups:
+    security_groups:
+      - group_id: sg-1111111
+      - group_id: sg-2222222
+
