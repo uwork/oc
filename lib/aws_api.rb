@@ -511,6 +511,7 @@ class AwsApi
   def onerror_response(resp, message)
     if resp.successful?
       $log.info "#{message} successful"
+      sleep 1
     else
       raise "#{message} failure: #{resp.error}"
     end
