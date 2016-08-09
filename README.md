@@ -15,6 +15,8 @@ git cloneの後は、bundleし、PATHを設定します。
 ```bash
 $ git clone git@github.com:uwork/oc.git ~/.occmd
 
+$ cd ~/.occmd
+
 $ bundle install
 
 $ echo 'export PATH=$PATH:~/.occmd/bin' >> ~/.bash_profile
