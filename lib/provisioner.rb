@@ -69,9 +69,10 @@ class Provisioner
         # ローカルからリモートに同期する
         remote.exec("mkdir -p #{TEMP_REPO_DIR}")
         remote.sync_up(temp_repo_path + "/", TEMP_REPO_DIR)
-      else
+      elsif !@repo.nil?
+        # リポジトリをリモートに同期する
         unless key.nil?
-          unless File.exists?(@sshkey)
+          unless File.exists?("#{@sshkey}")
             raise Thor::Error, "#{@sshkey} not found."
           end
           # 鍵が指定された場合、アップロードしてgit-sshスクリプト経由でgit cloneする
