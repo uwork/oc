@@ -1,0 +1,22 @@
+basic-login:
+  desc: "arrow ssh"
+  rules:
+    - "in/tcp/22/client"
+
+basic-http:
+  desc: "arrow http"
+  rules:
+    - "in/tcp/80/all"
+    - "in/tcp/443/all"
+
+basic-onlyme:
+  desc: "arrow only me"
+  rules:
+    - "in/all/all/client"
+
+basic-internal:
+  desc: "arrow sg internal"
+  rules:
+    - "in/all/all/internal"
+
+

@@ -125,15 +125,10 @@ class AwsApi
         end
       end
 
-      # Security Groupの作成
-      sec_groups = [
-        { name: "basic-login", desc: "arrow ssh", rules: [ "in/tcp/22/client" ] },
-        { name: "basic-http", desc: "arrow http", rules: [ "in/tcp/80/all", "in/tcp/443/all" ] },
-        { name: "basic-onlyme", desc: "arrow http", rules: [ "in/all/all/client" ] },
-      ]
-
-      sec_groups.each do |group|
-        create_security_group(group[:name], group[:rules], group[:desc], vpc_id)
+      # Security Groupの作成 FIXME: 将来別クラスに切り出すかも
+      sec_groups = YAML.load_file("#{ENV['OC_HOME']}/share/firewall.yml")
+      sec_groups.each do |name, group|
+        create_security_group(name, group["rules"], group["desc"], vpc_id)
       end
 
       # キーペアの初期化
@@ -155,15 +150,16 @@ class AwsApi
 
   # セキュリティグループを作成します。
   #
-  # rules: [in/out]/[tcp/udp/-1]/[port/-1]/[ip_address/all/client]
+  # rules: [in/out]/[tcp/udp/-1]/[port/-1]/[ip_address/all/client/internal]
   def create_security_group(name, rules, desc = "description", vpc_id = nil)
 
     if vpc_id.nil?
       vpc_id = get_vpc_id
     end
 
+    sg_name = "#{@profile}-#{name}"
     resp = @ec2.create_security_group({
-      group_name: "#{@profile}-#{name}",
+      group_name: sg_name,
       description: "#{name} servers.",
       vpc_id: vpc_id
     })
@@ -173,17 +169,31 @@ class AwsApi
 
     # add security group rules.
     rules.each do |rule|
-      type, proto, from_port, to_port, cidr = expand_firewall_rule(rule)
+      type, proto, from_port, to_port, cidr = expand_firewall_rule(group_id, rule)
       
       opts = {
         group_id: group_id,
         ip_protocol: proto,
         from_port: from_port,
         to_port: to_port,
-        cidr_ip: cidr
+        cidr_ip: cidr,
       }
 
-      $log.info "create security group={ type:#{type} proto:#{proto} port:#{from_port}-#{to_port} cidr:#{cidr} }"
+      if cidr.start_with?("sg-")
+        opts = {
+          group_id: group_id,
+          ip_permissions: [{
+            ip_protocol: proto,
+            from_port: from_port,
+            to_port: to_port,
+            user_id_group_pairs: [{
+              group_id: group_id
+            }]
+          }]
+        }
+      end
+
+      $log.info "create security group={ type:#{type} args:#{opts} }"
       if type == "in"
         resp = @ec2.authorize_security_group_ingress(opts)
       elsif type == "out"
@@ -442,7 +452,7 @@ class AwsApi
   end
 
   # ファイアウォールのルールテキストを分解する
-  def expand_firewall_rule(rule)
+  def expand_firewall_rule(group_id, rule)
     type, proto, port, src = rule.split("/")
 
     if type.nil? or proto.nil? or port.nil? or src.nil?
@@ -463,7 +473,11 @@ class AwsApi
       # このマシンのグローバルIPを調べる
       ip = RestClient.get 'http://checkip.amazonaws.com/'
       cidr = "#{ip.chomp}/32"
+    when "internal"
+      # 同じSG内
+      cidr = group_id
     when "all"
+      # すべて
       cidr = "0.0.0.0/0"
     else
       cidr = src
@@ -511,7 +525,7 @@ class AwsApi
   def onerror_response(resp, message)
     if resp.successful?
       $log.info "#{message} successful"
-      sleep 1
+      sleep 0.25
     else
       raise "#{message} failure: #{resp.error}"
     end

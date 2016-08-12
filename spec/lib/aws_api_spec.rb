@@ -63,6 +63,8 @@ module AwsConfigSpec
       @api.create_security_group("basic-test", ["in/all/all/all"], "description")
       @api.create_security_group("basic-test", ["in/tcp/80/all"], "description")
       @api.create_security_group("basic-test", ["in/tcp/3306/client"], "description")
+      @api.create_security_group("basic-test", ["in/tcp/3306/internal"], "description")
+      @api.create_security_group("basic-test", ["ouot/udp/3309/127.0.0.1"], "description")
     end
 
     it "delete security group test" do

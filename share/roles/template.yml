@@ -8,7 +8,7 @@ image: ami-e3106686 # Amazon Linux 2015.09(us-east-1)
 role: template
 
 
-# awsのセキュリティグループ(basic-http|basic-login|basic-onlyme)
+# awsのセキュリティグループ(basic-http|basic-login|basic-onlyme|basic-internal)
 firewall:
   - basic-onlyme
 
